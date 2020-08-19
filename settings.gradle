@@ -1,0 +1,7 @@
+include ':parser'
+include ':converter'
+include ':designsystem'
+include ':model'
+include ':app'
+include ':datastore'
+rootProject.name = "DemoDynamicLayout"
