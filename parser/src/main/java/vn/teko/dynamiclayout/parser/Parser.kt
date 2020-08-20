@@ -48,7 +48,7 @@ class Parser {
         val blocks = getAllBlocks()
 
         val expectedTypes = blocks.filter {
-            listOf("SLIDE_BANNER", "RECOMMENDED_CATEGORY", "BEST_SELLING_PRODUCT").contains(it.type)
+            listOf("SLIDE_BANNER", "RECOMMENDED_CATEGORY", "BEST_SELLING_PRODUCT", "PROMOTE_SELLER", "FLASH_SALE").contains(it.type)
         }
 
         expectedTypes.map {
@@ -80,7 +80,7 @@ class Parser {
                         )
                     }
                 }
-                "BEST_SELLING_PRODUCT" -> {
+                "BEST_SELLING_PRODUCT", "PROMOTE_SELLER", "FLASH_SALE" -> {
                     val products = mutableListOf<Product>()
                     products.addAll(getProducts(it.content.fetchParams))
                     if (products.isNotEmpty()) {
