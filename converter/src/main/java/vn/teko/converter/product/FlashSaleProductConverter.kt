@@ -1,7 +1,7 @@
 package vn.teko.converter.product
 
 import vn.teko.datastore.product.FlashSaleProductDataStore
-import vn.teko.model.ProductBlock
+import vn.teko.model.block.ProductBlock
 
 class FlashSaleProductConverter(
     private val product: ProductBlock,

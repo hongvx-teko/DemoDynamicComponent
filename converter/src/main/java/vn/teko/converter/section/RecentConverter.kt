@@ -5,12 +5,10 @@ import vn.teko.converter.product.FlashSaleProductConverter
 import vn.teko.converter.product.SimpleProductConverter
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
-import vn.teko.model.BestSaleBlock
-import vn.teko.model.Product
-import vn.teko.model.ProductBlock
+import vn.teko.model.block.RecentBlock
 
-class BestSaleSection(
-    private val model: BestSaleBlock,
+class RecentConverter(
+    private val model: RecentBlock,
     private val clickItemListener: ((Int) -> Unit)?
 ) : BlockWithTitleDataStore {
 
@@ -46,7 +44,6 @@ class BestSaleSection(
                         clickListener = { clickItemListener?.invoke(index) })
                 }
             }
-
         }
     }
 

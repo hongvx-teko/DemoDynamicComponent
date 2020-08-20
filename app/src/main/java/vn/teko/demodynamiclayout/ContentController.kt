@@ -1,14 +1,12 @@
 package vn.teko.demodynamiclayout
 
 import com.airbnb.epoxy.TypedEpoxyController
-import vn.teko.converter.section.FlashSaleSection
 import vn.teko.converter.product.SimpleProductConverter
-import vn.teko.converter.section.BestSaleSection
-import vn.teko.converter.section.Block2Section
-import vn.teko.converter.section.RecentSection
+import vn.teko.converter.section.*
 import vn.teko.designsystem.block.BlockWithTitleModel_
 import vn.teko.designsystem.product.SimpleProductModel_
-import vn.teko.model.*
+import vn.teko.model.block.*
+import vn.teko.model.listing.Product
 
 class ContentController(private val callbacks: Callbacks) : TypedEpoxyController<List<Block>>() {
 
@@ -34,8 +32,14 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                 is RecentBlock -> {
                     resolveRecentBlock(uiContent)
                 }
-                is Block2 -> {
-                    resolveBlock2(uiContent)
+                is NestedBlock -> {
+                    resolveNestedBlock(uiContent)
+                }
+                is BannerGroupBlock -> {
+                    resolveBannerGroup(uiContent)
+                }
+                is CategoryGroupBlock -> {
+                    resolveCategoryGroup(uiContent)
                 }
 
                 else -> {
@@ -44,17 +48,33 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
         }
     }
 
-    private fun resolveBlock2(uiContent: Block2) {
-        val block2Section = Block2Section(uiContent, null)
+    private fun resolveCategoryGroup(uiContent: CategoryGroupBlock) {
+        val categories = CategoryGroupConverter(uiContent, null)
         BlockWithTitleModel_()
-            .id(block2Section.getId())
-            .dataStore(block2Section)
-            .addIf(block2Section.getData().isNotEmpty(), this)
+            .id(categories.getId())
+            .dataStore(categories)
+            .addIf(categories.getData().isNotEmpty(), this)
+    }
+
+    private fun resolveBannerGroup(uiContent: BannerGroupBlock) {
+        val banners = BannerGroupConverter(uiContent, null)
+        BlockWithTitleModel_()
+            .id(banners.getId())
+            .dataStore(banners)
+            .addIf(banners.getData().isNotEmpty(), this)
+    }
+
+    private fun resolveNestedBlock(uiContent: NestedBlock) {
+        val nestedBlockSection = NestedBlockConverter(uiContent, null)
+        BlockWithTitleModel_()
+            .id(nestedBlockSection.getId())
+            .dataStore(nestedBlockSection)
+            .addIf(nestedBlockSection.getData().isNotEmpty(), this)
 
     }
 
     private fun resolveRecentBlock(uiContent: RecentBlock) {
-        val recentSection = RecentSection(uiContent) { idx ->
+        val recentSection = RecentConverter(uiContent) { idx ->
             callbacks.gotoDetail(
                 idx,
                 uiContent,
@@ -73,7 +93,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
         BlockWithTitleModel_()
             .id(uiContent.id())
             .dataStore(
-                BestSaleSection(uiContent) { idx ->
+                BestSaleConverter(uiContent) { idx ->
                     callbacks.gotoDetail(
                         idx,
                         uiContent,
@@ -89,7 +109,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
         BlockWithTitleModel_()
             .id(uiContent.id())
             .dataStore(
-                FlashSaleSection(uiContent) { idx ->
+                FlashSaleConverter(uiContent) { idx ->
                     callbacks.gotoDetail(
                         idx,
                         uiContent,

@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.fragment_first.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import vn.teko.dynamiclayout.parser.Parser
-import vn.teko.model.Block
-import vn.teko.model.Product
+import vn.teko.model.block.Block
+import vn.teko.model.listing.Product
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -38,9 +42,13 @@ class FirstFragment : Fragment(), ContentController.Callbacks {
 
         recyclerView.setController(contentController)
 
-        // step 1. fetch data from remote
-        val fetchData = Parser().fetchData(mapOf())
-        contentController.setData(fetchData)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val fetchData = Parser().fetchData(mapOf())
+            withContext(Dispatchers.Main) {
+                contentController.setData(fetchData)
+            }
+        }
+
 
     }
 

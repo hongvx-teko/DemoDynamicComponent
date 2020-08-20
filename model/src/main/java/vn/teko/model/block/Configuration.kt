@@ -1,4 +1,4 @@
-package vn.teko.model
+package vn.teko.model.block
 
 data class Configuration(
     private val type: String,

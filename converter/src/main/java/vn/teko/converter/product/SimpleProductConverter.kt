@@ -1,8 +1,7 @@
 package vn.teko.converter.product
 
 import vn.teko.datastore.product.SimpleProductDataStore
-import vn.teko.model.Product
-import vn.teko.model.ProductBlock
+import vn.teko.model.block.ProductBlock
 
 class SimpleProductConverter(private val product: ProductBlock, private val clickListener: (() -> Unit)?) :
     SimpleProductDataStore {

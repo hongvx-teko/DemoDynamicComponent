@@ -1,20 +1,23 @@
 package vn.teko.designsystem.block
 
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.isVisible
 import com.airbnb.epoxy.*
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
+import vn.teko.datastore.banner.BannerDataStore
+import vn.teko.datastore.category.CategoryDataStore
 import vn.teko.datastore.product.DiscountProductDataStore
 import vn.teko.datastore.product.FlashSaleProductDataStore
 import vn.teko.datastore.product.SimpleProductDataStore
 import vn.teko.designsystem.R
 import vn.teko.designsystem.UnsupportedTypeException
+import vn.teko.designsystem.banner.BannerModel_
+import vn.teko.designsystem.category.CategoryModel_
 import vn.teko.designsystem.product.DiscountProductModel_
 import vn.teko.designsystem.product.FlashSaleProductModel_
 import vn.teko.designsystem.product.SimpleProductModel_
-import java.lang.UnsupportedOperationException
 
 @EpoxyModelClass
 abstract class BlockWithTitleModel : EpoxyModelWithHolder<FlashSaleItemHolder>() {
@@ -31,6 +34,7 @@ abstract class BlockWithTitleModel : EpoxyModelWithHolder<FlashSaleItemHolder>()
     override fun bind(holder: FlashSaleItemHolder) {
         holder.apply {
             title?.text = dataStore.getTitle()
+            title?.isVisible = dataStore.getTitle().isNotEmpty()
 
             controller.setData(dataStore.getData())
             items?.setController(controller)
@@ -86,6 +90,18 @@ class BlockWithTitleController : TypedEpoxyController<List<DataStore>>() {
                 }
                 is BlockWithTitleDataStore -> {
                     BlockWithTitleModel_()
+                        .id(uiContent.getId())
+                        .dataStore(uiContent)
+                        .addTo(this)
+                }
+                is BannerDataStore -> {
+                    BannerModel_()
+                        .id(uiContent.getId())
+                        .dataStore(uiContent)
+                        .addTo(this)
+                }
+                is CategoryDataStore -> {
+                    CategoryModel_()
                         .id(uiContent.getId())
                         .dataStore(uiContent)
                         .addTo(this)

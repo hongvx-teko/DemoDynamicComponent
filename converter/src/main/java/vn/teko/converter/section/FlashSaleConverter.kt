@@ -5,12 +5,11 @@ import vn.teko.converter.product.FlashSaleProductConverter
 import vn.teko.converter.product.SimpleProductConverter
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
-import vn.teko.model.Product
-import vn.teko.model.ProductBlock
-import vn.teko.model.RecentBlock
+import vn.teko.model.block.FlashSaleBlock
+import vn.teko.model.block.ProductBlock
 
-class RecentSection(
-    private val model: RecentBlock,
+class FlashSaleConverter(
+    private val model: FlashSaleBlock,
     private val clickItemListener: ((Int) -> Unit)?
 ) : BlockWithTitleDataStore {
 
@@ -27,23 +26,27 @@ class RecentSection(
             when (model.getItemType()) {
                 "simple" -> {
                     SimpleProductConverter(
-                        product = product,
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
-                }
-                "flashsale" -> {
-                    FlashSaleProductConverter(
-                        product = product,
-                        clickListener = { clickItemListener?.invoke(index) })
+
                 }
                 "discount" -> {
                     DiscountProductConverter(
-                        product = product,
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
+
+                }
+                "flashsale" -> {
+                    FlashSaleProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
                 }
                 else -> {
-                    DiscountProductConverter(
-                        product = product,
+                    SimpleProductConverter(
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
+
                 }
             }
         }

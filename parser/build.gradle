@@ -5,6 +5,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(path: ':model')
+
+    implementation 'com.github.kittinunf.fuel:fuel:2.2.3'
+    implementation 'com.github.kittinunf.fuel:fuel-gson:2.2.3'
+    implementation 'com.github.kittinunf.fuel:fuel-coroutines:2.2.3'
 }
 
 sourceCompatibility = "1.7"
