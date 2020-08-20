@@ -7,7 +7,7 @@ class ProductGroupBlock(val products: List<ProductBlock>, val title: String) :
     }
 
     override fun getItemType(): String {
-        return "discount" // can be "simple", "discount", "flashsale"
+        return "flashsale" // can be "simple", "discount", "flashsale"
     }
 
     override fun id(): String {

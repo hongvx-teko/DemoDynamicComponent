@@ -9,14 +9,12 @@ import vn.teko.datastore.block.BlockWithTitleDataStore
 import vn.teko.datastore.banner.BannerDataStore
 import vn.teko.datastore.category.CategoryDataStore
 import vn.teko.datastore.product.DiscountProductDataStore
-import vn.teko.datastore.product.FlashSaleProductDataStore
 import vn.teko.datastore.product.SimpleProductDataStore
 import vn.teko.designsystem.R
 import vn.teko.designsystem.UnsupportedTypeException
 import vn.teko.designsystem.banner.BannerModel_
 import vn.teko.designsystem.category.CategoryModel_
 import vn.teko.designsystem.product.DiscountProductModel_
-import vn.teko.designsystem.product.FlashSaleProductModel_
 import vn.teko.designsystem.product.SimpleProductModel_
 
 @EpoxyModelClass
@@ -72,12 +70,6 @@ class BlockWithTitleController : TypedEpoxyController<List<DataStore>>() {
             when (uiContent) {
                 is SimpleProductDataStore -> {
                     SimpleProductModel_()
-                        .id(uiContent.getId())
-                        .dataStore(uiContent)
-                        .addTo(this)
-                }
-                is FlashSaleProductDataStore -> {
-                    FlashSaleProductModel_()
                         .id(uiContent.getId())
                         .dataStore(uiContent)
                         .addTo(this)

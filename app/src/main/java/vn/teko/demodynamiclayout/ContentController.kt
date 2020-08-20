@@ -24,7 +24,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                     resolveProductBlock(uiContent, index)
                 }
                 is ProductGroupBlock -> {
-                    resolveFlashSaleBlock(uiContent)
+                    resolveProductGroup(uiContent)
                 }
                 is NestedBlock -> {
                     resolveNestedBlock(uiContent)
@@ -67,7 +67,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
 
     }
 
-    private fun resolveFlashSaleBlock(uiContent: ProductGroupBlock) {
+    private fun resolveProductGroup(uiContent: ProductGroupBlock) {
         val products = uiContent.products
 
         BlockWithTitleModel_()

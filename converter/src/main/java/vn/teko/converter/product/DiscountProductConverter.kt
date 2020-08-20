@@ -6,6 +6,10 @@ import vn.teko.model.block.ProductBlock
 class DiscountProductConverter(private val product: ProductBlock, private val clickListener: (() -> Unit)?) :
     DiscountProductDataStore {
 
+    override fun getImageUrl(): String {
+        return product.product.images.firstOrNull()?.url ?: ""
+    }
+
     override fun getName(): String {
         return product.product.name
     }
@@ -15,11 +19,11 @@ class DiscountProductConverter(private val product: ProductBlock, private val cl
     }
 
     override fun sellPrice(): String {
-        return product.product.sellPrice.toString()
+        return product.product.price.sellPrice.toString()
     }
 
     override fun listedPrice(): String {
-        return product.product.listedPrice.toString()
+        return product.product.price.supplierSalePrice.toString()
     }
 
     override fun clickListener(): (() -> Unit)? {

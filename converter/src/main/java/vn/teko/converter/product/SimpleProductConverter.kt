@@ -10,6 +10,10 @@ class SimpleProductConverter(private val product: ProductBlock, private val clic
         return product.product.name
     }
 
+    override fun getImageUrl(): String {
+        return product.product.images.firstOrNull()?.url ?: ""
+    }
+
     override fun clickListener(): (() -> Unit)? {
         return clickListener
     }
