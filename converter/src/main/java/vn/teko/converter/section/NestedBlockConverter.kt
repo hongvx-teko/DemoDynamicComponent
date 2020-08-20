@@ -22,14 +22,8 @@ class NestedBlockConverter(
         val dataStores = mutableListOf<DataStore>()
         model.getBlocks().mapIndexed { index, block ->
             when (block) {
-                is FlashSaleBlock -> {
-                    dataStores.add(FlashSaleConverter(block, null))
-                }
-                is BestSaleBlock -> {
-                    dataStores.add(BestSaleConverter(block, null))
-                }
-                is RecentBlock -> {
-                    dataStores.add(RecentConverter(block, null))
+                is ProductGroupBlock -> {
+                    dataStores.add(ProductGroupConverter(block, null))
                 }
                 is CategoryGroupBlock -> {
                     dataStores.add(CategoryGroupConverter(block, null))

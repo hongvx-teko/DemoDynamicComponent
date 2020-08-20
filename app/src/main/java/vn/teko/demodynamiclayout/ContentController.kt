@@ -23,14 +23,8 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                 is ProductBlock -> {
                     resolveProductBlock(uiContent, index)
                 }
-                is FlashSaleBlock -> {
+                is ProductGroupBlock -> {
                     resolveFlashSaleBlock(uiContent)
-                }
-                is BestSaleBlock -> {
-                    resolveBestSaleBlock(uiContent)
-                }
-                is RecentBlock -> {
-                    resolveRecentBlock(uiContent)
                 }
                 is NestedBlock -> {
                     resolveNestedBlock(uiContent)
@@ -73,43 +67,13 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
 
     }
 
-    private fun resolveRecentBlock(uiContent: RecentBlock) {
-        val recentSection = RecentConverter(uiContent) { idx ->
-            callbacks.gotoDetail(
-                idx,
-                uiContent,
-                uiContent.products[idx].product
-            )
-        }
-        BlockWithTitleModel_()
-            .id(recentSection.getId())
-            .dataStore(recentSection)
-            .addIf(uiContent.products.isNotEmpty(), this)
-    }
-
-    private fun resolveBestSaleBlock(uiContent: BestSaleBlock) {
+    private fun resolveFlashSaleBlock(uiContent: ProductGroupBlock) {
         val products = uiContent.products
 
         BlockWithTitleModel_()
             .id(uiContent.id())
             .dataStore(
-                BestSaleConverter(uiContent) { idx ->
-                    callbacks.gotoDetail(
-                        idx,
-                        uiContent,
-                        products[idx].product
-                    )
-                })
-            .addIf(products.isNotEmpty(), this)
-    }
-
-    private fun resolveFlashSaleBlock(uiContent: FlashSaleBlock) {
-        val products = uiContent.products
-
-        BlockWithTitleModel_()
-            .id(uiContent.id())
-            .dataStore(
-                FlashSaleConverter(uiContent) { idx ->
+                ProductGroupConverter(uiContent) { idx ->
                     callbacks.gotoDetail(
                         idx,
                         uiContent,

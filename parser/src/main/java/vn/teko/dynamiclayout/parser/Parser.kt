@@ -28,6 +28,18 @@ class Parser {
     private fun startFetching(): List<Block> {
         println("start fetching data from network")
 
+        getRealData()
+
+        val products = mutableListOf<Block>()
+        products.add(generateBannerGroup())
+        products.add(generateProductGroupBlock())
+        products.add(generateRecommendCategoryBlock())
+        products.add(generateNestedBlock())
+
+        return products
+    }
+
+    private fun getRealData() {
         val homePage = REQ_GET_BLOCKS.httpGet(
             listOf(
                 "terminalCode" to "vnshop_app"
@@ -39,46 +51,15 @@ class Parser {
             it.type in listOf("SLIDE_BANNER", "RECOMMENDED_CATEGORY", "BEST_SELLING_PRODUCT")
         }
         println(blocks)
-
-
-        val products = mutableListOf<Block>()
-        products.add(generateBannerGroup())
-        products.add(generateFlashSaleBlock())
-        products.add(generateRecommendCategoryBlock())
-        products.add(generateRecentBlock())
-        products.add(generateNestedBlock())
-
-        return products
     }
 
     private fun generateNestedBlock(): NestedBlock {
         return NestedBlock(
             listOf(
-                generateFlashSaleBlock(),
+                generateProductGroupBlock(),
                 generateRecommendCategoryBlock()
             ), "Nested Block"
         )
-    }
-
-    private fun generateRecentBlock(): RecentBlock {
-        val recentProducts = mutableListOf<Product>()
-        for (j in 0..10) {
-            recentProducts.add(
-                Product(
-                    "recentproduct $j",
-                    1000,
-                    2000,
-                    0,
-                    0
-                )
-            )
-        }
-        val element = RecentBlock(recentProducts.map {
-            ProductBlock(
-                it
-            )
-        }, "Recent")
-        return element
     }
 
     private fun generateRecommendCategoryBlock(): CategoryGroupBlock {
@@ -95,10 +76,10 @@ class Parser {
         return CategoryGroupBlock(categories.map { CategoryBlock(it) }, "Recommend Categories")
     }
 
-    private fun generateFlashSaleBlock(): FlashSaleBlock {
-        val flashSaleProducts = mutableListOf<Product>()
+    private fun generateProductGroupBlock(): ProductGroupBlock {
+        val products = mutableListOf<Product>()
         for (j in 0..10) {
-            flashSaleProducts.add(
+            products.add(
                 Product(
                     "flashproduct $j",
                     1000,
@@ -108,13 +89,11 @@ class Parser {
                 )
             )
         }
-        val flashSaleBlock =
-            FlashSaleBlock(flashSaleProducts.map {
-                ProductBlock(
-                    it
-                )
-            }, "Flash Sale")
-        return flashSaleBlock
+        return ProductGroupBlock(products.map {
+            ProductBlock(
+                it
+            )
+        }, "Products")
     }
 
     private fun generateBannerGroup(): BannerGroupBlock {

@@ -5,10 +5,11 @@ import vn.teko.converter.product.FlashSaleProductConverter
 import vn.teko.converter.product.SimpleProductConverter
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
-import vn.teko.model.block.RecentBlock
+import vn.teko.model.block.ProductGroupBlock
+import vn.teko.model.block.ProductBlock
 
-class RecentConverter(
-    private val model: RecentBlock,
+class ProductGroupConverter(
+    private val model: ProductGroupBlock,
     private val clickItemListener: ((Int) -> Unit)?
 ) : BlockWithTitleDataStore {
 
@@ -25,23 +26,27 @@ class RecentConverter(
             when (model.getItemType()) {
                 "simple" -> {
                     SimpleProductConverter(
-                        product = product,
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
-                }
-                "flashsale" -> {
-                    FlashSaleProductConverter(
-                        product = product,
-                        clickListener = { clickItemListener?.invoke(index) })
+
                 }
                 "discount" -> {
                     DiscountProductConverter(
-                        product = product,
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
+
+                }
+                "flashsale" -> {
+                    FlashSaleProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
                 }
                 else -> {
-                    DiscountProductConverter(
-                        product = product,
+                    SimpleProductConverter(
+                        product = ProductBlock(product.product),
                         clickListener = { clickItemListener?.invoke(index) })
+
                 }
             }
         }
