@@ -23,21 +23,23 @@ class Parser {
     fun fetchData(params: Map<String, String>): List<Block> {
         this.params = params
 
-        return startFetching()
+        return startFetching(useFake = false)
     }
 
-    private fun startFetching(): List<Block> {
+    private fun startFetching(useFake: Boolean = false): List<Block> {
         println("start fetching data from network")
 
-        return getRealData()
+        return if (useFake) getFakeData() else getRealData()
+    }
 
-//        val products = mutableListOf<Block>()
-//        products.add(generateBannerGroup())
-//        products.add(generateProductGroupBlock())
-//        products.add(generateRecommendCategoryBlock())
-//        products.add(generateNestedBlock())
-//
-//        return products
+    private fun getFakeData(): MutableList<Block> {
+        val products = mutableListOf<Block>()
+        products.add(generateBannerGroup())
+        products.add(generateProductGroupBlock())
+        products.add(generateRecommendCategoryBlock())
+        products.add(generateNestedBlock())
+
+        return products
     }
 
     private fun getRealData(): List<Block> {

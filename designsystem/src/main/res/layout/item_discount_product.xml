@@ -10,8 +10,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:src="@android:drawable/ic_input_add" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,8 +28,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:paddingHorizontal="16dp"
         android:paddingBottom="8dp"
         android:text="product" />

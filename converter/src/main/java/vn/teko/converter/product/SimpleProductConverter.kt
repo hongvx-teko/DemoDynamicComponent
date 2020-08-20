@@ -7,7 +7,7 @@ class SimpleProductConverter(private val product: ProductBlock, private val clic
     SimpleProductDataStore {
 
     override fun getPrice(): String {
-        return product.product.name
+        return product.product.price.sellPrice.toString()
     }
 
     override fun getImageUrl(): String {

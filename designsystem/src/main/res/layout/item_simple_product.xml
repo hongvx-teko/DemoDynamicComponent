@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:inputType="textMultiLine"
+        android:maxLines="1"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:text="1.000 d" />
