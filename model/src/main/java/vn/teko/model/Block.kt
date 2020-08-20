@@ -22,6 +22,11 @@ interface Combination : Block {
      */
     fun getBlocks(): List<Block>
 
+    /**
+     * UI type to display an item of Combination
+     */
+    fun getItemType(): String
+
 }
 
 abstract class BlockFactory {
@@ -40,7 +45,14 @@ class ProductBlock(val product: Product) : Block {
 
 }
 
-class FlashSaleBlock(val products: List<Product>, val title: String) : Block {
+class FlashSaleBlock(val products: List<ProductBlock>, val title: String) : Combination {
+    override fun getBlocks(): List<Block> {
+        return products
+    }
+
+    override fun getItemType(): String {
+        return "discount" // can be "simple", "discount", "flashsale"
+    }
 
     override fun id(): String {
         return title
@@ -51,7 +63,14 @@ class FlashSaleBlock(val products: List<Product>, val title: String) : Block {
     }
 }
 
-class BestSaleBlock(val products: List<Product>, val title: String) : Block {
+class BestSaleBlock(val products: List<ProductBlock>, val title: String) : Combination {
+    override fun getBlocks(): List<Block> {
+        return products
+    }
+
+    override fun getItemType(): String {
+        return "flashsale" // can be "simple", "discount", "flashsale"
+    }
 
     override fun id(): String {
         return title
@@ -62,7 +81,14 @@ class BestSaleBlock(val products: List<Product>, val title: String) : Block {
     }
 }
 
-class RecentBlock(val products: List<Product>, val title: String) : Block {
+class RecentBlock(val products: List<ProductBlock>, val title: String) : Combination {
+    override fun getBlocks(): List<Block> {
+        return products
+    }
+
+    override fun getItemType(): String {
+        return "simple" // can be "simple", "discount", "flashsale"
+    }
 
     override fun id(): String {
         return title
@@ -84,6 +110,10 @@ class Block2(val bs: List<Block>, val title: String) : Combination {
 
     override fun getConfiguration(): List<Configuration> {
         return listOf()
+    }
+
+    override fun getItemType(): String {
+        return ""
     }
 
 }

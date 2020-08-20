@@ -1,6 +1,7 @@
 package vn.teko.converter.section
 
 import vn.teko.converter.product.DiscountProductConverter
+import vn.teko.converter.product.FlashSaleProductConverter
 import vn.teko.converter.product.SimpleProductConverter
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
@@ -23,9 +24,29 @@ class BestSaleSection(
 
     override fun getData(): List<DataStore> {
         return model.products.mapIndexed { index, product ->
-            DiscountProductConverter(
-                product = ProductBlock(product),
-                clickListener = { clickItemListener?.invoke(index) })
+            when (model.getItemType()) {
+                "simple" -> {
+                    SimpleProductConverter(
+                        product = product,
+                        clickListener = { clickItemListener?.invoke(index) })
+                }
+                "flashsale" -> {
+                    FlashSaleProductConverter(
+                        product = product,
+                        clickListener = { clickItemListener?.invoke(index) })
+                }
+                "discount" -> {
+                    DiscountProductConverter(
+                        product = product,
+                        clickListener = { clickItemListener?.invoke(index) })
+                }
+                else -> {
+                    DiscountProductConverter(
+                        product = product,
+                        clickListener = { clickItemListener?.invoke(index) })
+                }
+            }
+
         }
     }
 

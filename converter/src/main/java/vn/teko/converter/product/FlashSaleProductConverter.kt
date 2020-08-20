@@ -6,8 +6,7 @@ import vn.teko.model.ProductBlock
 class FlashSaleProductConverter(
     private val product: ProductBlock,
     private val clickListener: (() -> Unit)?
-) :
-    FlashSaleProductDataStore {
+) : FlashSaleProductDataStore {
 
     override fun getName(): String {
         return product.product.name

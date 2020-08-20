@@ -58,7 +58,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
             callbacks.gotoDetail(
                 idx,
                 uiContent,
-                uiContent.products[idx]
+                uiContent.products[idx].product
             )
         }
         BlockWithTitleModel_()
@@ -77,7 +77,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                     callbacks.gotoDetail(
                         idx,
                         uiContent,
-                        products[idx]
+                        products[idx].product
                     )
                 })
             .addIf(products.isNotEmpty(), this)
@@ -93,7 +93,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                     callbacks.gotoDetail(
                         idx,
                         uiContent,
-                        products[idx]
+                        products[idx].product
                     )
                 })
             .addIf(products.isNotEmpty(), this)

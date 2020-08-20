@@ -1,6 +1,8 @@
 package vn.teko.converter.section
 
+import vn.teko.converter.product.DiscountProductConverter
 import vn.teko.converter.product.FlashSaleProductConverter
+import vn.teko.converter.product.SimpleProductConverter
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
 import vn.teko.model.FlashSaleBlock
@@ -21,9 +23,32 @@ class FlashSaleSection(
 
     override fun getData(): List<DataStore> {
         return model.products.mapIndexed { index, product ->
-            FlashSaleProductConverter(
-                product = ProductBlock(product),
-                clickListener = { clickItemListener?.invoke(index) })
+            when (model.getItemType()) {
+                "simple" -> {
+                    SimpleProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
+                }
+                "discount" -> {
+                    DiscountProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
+                }
+                "flashsale" -> {
+                    FlashSaleProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
+                }
+                else -> {
+                    SimpleProductConverter(
+                        product = ProductBlock(product.product),
+                        clickListener = { clickItemListener?.invoke(index) })
+
+                }
+            }
         }
     }
 
