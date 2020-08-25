@@ -15,6 +15,9 @@ abstract class Parser {
         return factory?.createFactory(homeBlock.layout.type)?.createBlock(homeBlock)
     }
 
+    /**
+     * start fetching data and return a list of block will be displayed
+     */
     fun fetchData(params: Map<String, String>): List<Block> {
         factory = provideBlockFactory()
 
@@ -30,10 +33,10 @@ abstract class Parser {
         return result
     }
 
-    abstract fun provideBlockFactory(): AbstractBlockFactory
+    protected abstract fun provideBlockFactory(): AbstractBlockFactory
 
     /**
      * how to fetch all blocks from listing service
      */
-    abstract fun getAllBlocks(params: Map<String, String>): List<HomeBlock>
+    protected abstract fun getAllBlocks(params: Map<String, String>): List<HomeBlock>
 }
