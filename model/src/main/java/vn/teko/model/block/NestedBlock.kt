@@ -1,7 +1,6 @@
 package vn.teko.model.block
 
-class NestedBlock(val bs: List<Block>, val title: String) :
-    Combination {
+class NestedBlock(val bs: List<Block>, val title: String) : Combination {
     override fun getBlocks(): List<Block> {
         return bs
     }

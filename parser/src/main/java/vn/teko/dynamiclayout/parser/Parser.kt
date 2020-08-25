@@ -2,7 +2,12 @@ package vn.teko.dynamiclayout.parser
 
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
+import vn.teko.dynamiclayout.parser.factory.BannerGroupBlockFactory
+import vn.teko.dynamiclayout.parser.factory.BlockFactory
+import vn.teko.dynamiclayout.parser.factory.CategoryGroupBlockFactory
+import vn.teko.dynamiclayout.parser.factory.ProductGroupBlockFactory
 import vn.teko.model.block.*
+import vn.teko.model.generator.HomeBlockGenerator
 import vn.teko.model.listing.*
 
 class Parser {
@@ -18,166 +23,160 @@ class Parser {
         "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/2/28/dab503c3-bef5-42ea-83a7-1c0f2d4feee1_1111.png"
     )
 
-    private var params: Map<String, String>? = null
+    private val catImages = arrayOf(
+        "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/12/20200312_e2481386-ea8a-4cc5-b818-1a425ae9ffec.png",
+        "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/18/20200318_8e36f70d-1551-4db9-81ff-f2e07e16da32.jpe",
+        "https://phongvu.vn/media/catalog_v2/media/6/90/1575607382.0744328_191200109.jpg",
+        "https://phongvu.vn/media/catalog_v2/media/4/18/1569404509.003934_190901259.jpg",
+        "https://lh3.googleusercontent.com/apU3QVDtEQtt03xVg3lld-SmDQnfcdO3V48osnMzTPHLRSiNvqMwJPEMwVQty9wSZ3y7gebUf2x-NON6Kdk",
+        "https://lh3.googleusercontent.com/Hi7DIhfdVnmRPhQA-JQ9NO_HBAC-Hxj3SfrDXVx-ahHm24r2lsmnG2J7WtJLbw6Du0uHGtQG0T2eosyiOg",
+        "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/25/20200325_d7e65d06-ce49-42f9-a570-8e0ba35bfbd4.png",
+        "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/4/16/20200416_6e021416-a3d1-4077-96d4-bed2fe002f2e.png"
+    )
 
-    fun fetchData(params: Map<String, String>): List<Block> {
-        this.params = params
-
-        return startFetching(useFake = false)
-    }
-
-    private fun startFetching(useFake: Boolean = false): List<Block> {
+    fun fetchData(): List<Block> {
         println("start fetching data from network")
 
-        return if (useFake) getFakeData() else getRealData()
-    }
-
-    private fun getFakeData(): MutableList<Block> {
-        val products = mutableListOf<Block>()
-        products.add(generateBannerGroup())
-        products.add(generateProductGroupBlock())
-        products.add(generateRecommendCategoryBlock())
-        products.add(generateNestedBlock())
-
-        return products
-    }
-
-    private fun getRealData(): List<Block> {
         val result = mutableListOf<Block>()
 
         val blocks = getAllBlocks()
 
-        val expectedTypes = blocks.filter {
-            listOf("SLIDE_BANNER", "RECOMMENDED_CATEGORY", "BEST_SELLING_PRODUCT", "PROMOTE_SELLER", "FLASH_SALE").contains(it.type)
-        }
-
-        expectedTypes.map {
-            when (it.type) {
+        blocks.map {
+            val factory: BlockFactory? = when (it.layout.type) {
                 "SLIDE_BANNER" -> {
-                    val banners = mutableListOf<Banner>()
-                    it.content.items.map { i -> banners.add(Banner(i.id, i.imageUrl)) }
-                    if (banners.isNotEmpty()) {
-                        result.add(BannerGroupBlock(banners.map { i -> BannerBlock(i) }))
-                    }
+                    BannerGroupBlockFactory()
                 }
                 "RECOMMENDED_CATEGORY" -> {
-                    val categories = mutableListOf<Category>()
-                    it.content.items.map { i ->
-                        categories.add(
-                            Category(
-                                i.id,
-                                i.label,
-                                i.imageUrl
-                            )
-                        )
-                    }
-                    if (categories.isNotEmpty()) {
-                        result.add(
-                            CategoryGroupBlock(
-                                categories.map { i -> CategoryBlock(i) },
-                                it.label
-                            )
-                        )
-                    }
+                    CategoryGroupBlockFactory()
                 }
                 "BEST_SELLING_PRODUCT", "PROMOTE_SELLER", "FLASH_SALE" -> {
-                    val products = mutableListOf<Product>()
-                    products.addAll(getProducts(it.content.fetchParams))
-                    if (products.isNotEmpty()) {
-                        result.add(
-                            ProductGroupBlock(
-                                products.map { i -> ProductBlock(i) },
-                                it.label
-                            )
-                        )
-                    }
+                    ProductGroupBlockFactory()
                 }
                 else -> {
+                    null
                 }
             }
+
+            factory?.createBlock(it)?.let { block ->
+                result.add(block)
+            }
         }
+
 
         return result
     }
 
-    private fun getProducts(params: HomeBlockContentParams): List<Product> {
-        val listProduct = REQ_GET_PRODUCTS.httpGet(
-            listOf(
-                "channel" to "vnshop_online",
-                "terminal" to "vnshop_app",
-                "_sort" to params.sorting?.sort,
-                "_order" to params.sorting?.order,
-                "_page" to "1",
-                "_limit" to "20",
-                "publishStatus" to "true",
-                "price_gte" to "1",
-                "saleStatuses_ne" to "ngung_kinh_doanh,hang_dat_truoc",
-                "clientCode" to "vnshop"
-            )
-        ).responseObject<AllProduct>()
-
-        return listProduct.third.get().result?.products ?: listOf()
-    }
-
     private fun getAllBlocks(): List<HomeBlock> {
-        val homePage = REQ_GET_BLOCKS.httpGet(
-            listOf(
-                "terminalCode" to "vnshop_app"
+//                val homePage = REQ_GET_BLOCKS.httpGet(
+//            listOf(
+//                "terminalCode" to "vnshop_app"
+//            )
+//        ).responseObject<HomePage>()
+//        return homePage.third.get().result?.blocks ?: listOf()
+
+        val blocks = mutableListOf<HomeBlock>()
+        blocks.add(
+            HomeBlock(
+                id = "block1",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "SLIDE_BANNER",
+                    configurations = SlideBannerConfiguration().configs(),
+                    childLayout = null
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "Banner Slider",
+                    items = bannerImages.mapIndexed { index, url ->
+                        HomeBlockContentItem(
+                            "banner$index",
+                            "Label $index",
+                            url
+                        )
+                    },
+                    fetchParams = HomeBlockContentParams(
+                        sorting = HomeBlockContentParamsSort("SORT_BY_SCORE", "ORDER_BY_DESCENDING")
+                    )
+                )
             )
-        ).responseObject<HomePage>()
-
-        return homePage.third.get().result?.blocks ?: listOf()
-    }
-
-    private fun generateNestedBlock(): NestedBlock {
-        return NestedBlock(
-            listOf(
-                generateProductGroupBlock(),
-                generateRecommendCategoryBlock()
-            ), "Nested Block"
         )
-    }
-
-    private fun generateRecommendCategoryBlock(): CategoryGroupBlock {
-        val categories = mutableListOf<Category>()
-        val catImages = arrayOf(
-            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/12/20200312_e2481386-ea8a-4cc5-b818-1a425ae9ffec.png",
-            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/18/20200318_8e36f70d-1551-4db9-81ff-f2e07e16da32.jpe",
-            "https://phongvu.vn/media/catalog_v2/media/6/90/1575607382.0744328_191200109.jpg",
-            "https://phongvu.vn/media/catalog_v2/media/4/18/1569404509.003934_190901259.jpg",
-            "https://lh3.googleusercontent.com/apU3QVDtEQtt03xVg3lld-SmDQnfcdO3V48osnMzTPHLRSiNvqMwJPEMwVQty9wSZ3y7gebUf2x-NON6Kdk",
-            "https://lh3.googleusercontent.com/Hi7DIhfdVnmRPhQA-JQ9NO_HBAC-Hxj3SfrDXVx-ahHm24r2lsmnG2J7WtJLbw6Du0uHGtQG0T2eosyiOg",
-            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/3/25/20200325_d7e65d06-ce49-42f9-a570-8e0ba35bfbd4.png",
-            "https://storage.googleapis.com/teko-gae.appspot.com/media/image/2020/4/16/20200416_6e021416-a3d1-4077-96d4-bed2fe002f2e.png"
+        blocks.add(
+            HomeBlock(
+                id = "block2",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "RECOMMENDED_CATEGORY",
+                    configurations = RecommendedCategoryConfiguration().configs(),
+                    childLayout = null
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "Recommended Categories",
+                    items = catImages.mapIndexed { index, url ->
+                        HomeBlockContentItem(
+                            "cat$index",
+                            "Cat $index",
+                            url
+                        )
+                    },
+                    fetchParams = HomeBlockContentParams(
+                        sorting = null
+                    )
+                )
+            )
         )
-        for (j in catImages.indices) {
-            categories.add(Category("cat $j", "cat $j", catImages[j]))
-        }
-        return CategoryGroupBlock(categories.map { CategoryBlock(it) }, "Recommend Categories")
-    }
 
-    private fun generateProductGroupBlock(): ProductGroupBlock {
-        val products = mutableListOf<Product>()
-        for (j in 0..10) {
-            products.add(
-                Product("flashproduct $j", Price(1000.0, 2000.0), listOf())
+        blocks.add(
+            HomeBlock(
+                id = "block3",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "BEST_SELLING_PRODUCT",
+                    configurations = BestSellingProductConfiguration().configs(),
+                    childLayout = null
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "BEST_SELLING_PRODUCT",
+                    items = listOf(),
+                    fetchParams = HomeBlockContentParams(
+                        sorting = HomeBlockContentParamsSort("SORT_BY_SCORE", "ORDER_BY_DESCENDING")
+                    )
+                )
             )
-        }
-        return ProductGroupBlock(products.map {
-            ProductBlock(
-                it
+        )
+
+        blocks.add(
+            HomeBlock(
+                id = "block3",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "PROMOTE_SELLER",
+                    configurations = PromoteSellerConfiguration().configs(),
+                    childLayout = null
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "PROMOTE_SELLER",
+                    items = listOf(),
+                    fetchParams = HomeBlockContentParams(
+                        sorting = HomeBlockContentParamsSort("SORT_BY_PRICE", "ORDER_BY_DESCENDING")
+                    )
+                )
             )
-        }, "Products")
+        )
+
+        blocks.add(
+            HomeBlock(
+                id = "block4",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "FLASH_SALE",
+                    configurations = FlashSaleConfiguration().configs(),
+                    childLayout = null
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "FLASH_SALE",
+                    items = listOf(),
+                    fetchParams = HomeBlockContentParams(
+                        sorting = HomeBlockContentParamsSort("SORT_BY_SCORE", "ORDER_BY_DESCENDING")
+                    )
+                )
+            )
+        )
+
+        return blocks
     }
-
-    private fun generateBannerGroup(): BannerGroupBlock {
-        val banners = mutableListOf<Banner>()
-        for (i in bannerImages.indices) {
-            banners.add(Banner(id = "banner$i", imageUrl = bannerImages[i]))
-        }
-
-        return BannerGroupBlock(banners.map { BannerBlock(it) })
-    }
-
 
 }

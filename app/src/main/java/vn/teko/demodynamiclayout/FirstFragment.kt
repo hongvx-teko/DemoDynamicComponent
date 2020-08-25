@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.fragment_first.*
 import kotlinx.coroutines.Dispatchers
@@ -43,9 +44,10 @@ class FirstFragment : Fragment(), ContentController.Callbacks {
         recyclerView.setController(contentController)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val fetchData = Parser().fetchData(mapOf())
+            val fetchData = Parser().fetchData()
             withContext(Dispatchers.Main) {
                 contentController.setData(fetchData)
+                loading.isVisible = false
             }
         }
 
