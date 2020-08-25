@@ -11,7 +11,7 @@ class BannerGroupBlockFactory : BlockFactory {
 
     override fun createBlock(homeBlock: HomeBlock): Block? {
         val banners = mutableListOf<Banner>()
-        homeBlock.content.items.map { i -> banners.add(Banner(i.id, i.imageUrl)) }
+        homeBlock.content.items?.map { i -> banners.add(Banner(i.id, i.imageUrl)) }
         return if (banners.isNotEmpty()) {
             BannerGroupBlock(banners.map { i -> BannerBlock(i) })
         } else {

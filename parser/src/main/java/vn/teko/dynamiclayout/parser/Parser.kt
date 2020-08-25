@@ -1,8 +1,10 @@
 package vn.teko.dynamiclayout.parser
 
+import com.google.gson.Gson
 import vn.teko.dynamiclayout.parser.factory.AbstractBlockFactory
 import vn.teko.model.block.Block
 import vn.teko.model.listing.HomeBlock
+import vn.teko.model.listing.HomePage
 
 abstract class Parser {
 
@@ -24,6 +26,12 @@ abstract class Parser {
         val result = mutableListOf<Block>()
 
         val blocks = getAllBlocks(params)
+        val homePageResult = HomePage.HomePageResult()
+        homePageResult.blocks = blocks
+        val homePage = HomePage()
+        homePage.result = homePageResult
+        val json = Gson().toJson(homePage)
+
         blocks.map {
             createBlock(it)?.let { block ->
                 result.add(block)

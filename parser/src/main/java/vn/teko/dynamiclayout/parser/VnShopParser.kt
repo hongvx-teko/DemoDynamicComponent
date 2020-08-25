@@ -143,6 +143,60 @@ class VnShopParser : Parser() {
             )
         )
 
+        blocks.add(
+            HomeBlock(
+                id = "block5",
+                layout = HomeBlockGenerator.generateLayout(
+                    type = "NESTED_BLOCK",
+                    configurations = FlashSaleConfiguration().configs()
+                ),
+                content = HomeBlockGenerator.generateContent(
+                    label = "NESTED_BLOCK",
+                    children = listOf(
+                        HomeBlock(
+                            id = "block6",
+                            layout = HomeBlockGenerator.generateLayout(
+                                type = "FLASH_SALE",
+                                configurations = FlashSaleConfiguration().configs(),
+                                childLayout = null
+                            ),
+                            content = HomeBlockGenerator.generateContent(
+                                label = "Nested Child 1",
+                                items = listOf(),
+                                fetchParams = HomeBlockContentParams(
+                                    sorting = HomeBlockContentParamsSort(
+                                        "SORT_BY_SCORE",
+                                        "ORDER_BY_DESCENDING"
+                                    )
+                                )
+                            )
+                        ),
+                        HomeBlock(
+                            id = "block7",
+                            layout = HomeBlockGenerator.generateLayout(
+                                type = "RECOMMENDED_CATEGORY",
+                                configurations = RecommendedCategoryConfiguration().configs(),
+                                childLayout = null
+                            ),
+                            content = HomeBlockGenerator.generateContent(
+                                label = "Nested child 2",
+                                items = catImages.mapIndexed { index, url ->
+                                    HomeBlockContentItem(
+                                        "cat$index",
+                                        "Cat $index",
+                                        url
+                                    )
+                                },
+                                fetchParams = HomeBlockContentParams(
+                                    sorting = null
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
         return blocks
     }
 

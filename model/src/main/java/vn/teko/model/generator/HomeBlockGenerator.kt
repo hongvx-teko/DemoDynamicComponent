@@ -5,24 +5,26 @@ import vn.teko.model.listing.*
 object HomeBlockGenerator {
 
     fun generateContent(
-        label: String?,
-        items: List<HomeBlockContentItem>,
-        fetchParams: HomeBlockContentParams?
+        label: String? = null,
+        items: List<HomeBlockContentItem>? = null,
+        fetchParams: HomeBlockContentParams? = null,
+        children: List<HomeBlock>? = null
     ): HomeBlockContent {
         return HomeBlockContent(
-            label = label ?: "",
-            items = items,
-            fetchParams = fetchParams ?: HomeBlockContentParams(null)
+            label = label,
+            items = items ?: listOf(),
+            fetchParams = fetchParams ?: HomeBlockContentParams(null),
+            childs = children ?: listOf()
         )
     }
 
     fun generateLayout(
         type: String,
-        configurations: Map<String, String>?,
-        childLayout: HomeBlockLayout?
+        configurations: Map<String, String>? = null,
+        childLayout: HomeBlockLayout? = null
     ): HomeBlockLayout {
         return HomeBlockLayout(
-            type = type ?: "",
+            type = type,
             configurations = configurations ?: mapOf(),
             childLayout = childLayout
         )

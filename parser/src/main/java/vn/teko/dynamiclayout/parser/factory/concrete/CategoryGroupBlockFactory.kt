@@ -11,9 +11,9 @@ class CategoryGroupBlockFactory : BlockFactory {
 
     override fun createBlock(homeBlock: HomeBlock): Block? {
         val categories = mutableListOf<Category>()
-        homeBlock.content.items.map { i -> categories.add(Category(i.id, i.label, i.imageUrl)) }
+        homeBlock.content.items?.map { i -> categories.add(Category(i.id, i.label, i.imageUrl)) }
         return if (categories.isNotEmpty()) {
-            CategoryGroupBlock(categories.map { i -> CategoryBlock(i) }, homeBlock.content.label)
+            CategoryGroupBlock(categories.map { i -> CategoryBlock(i) }, homeBlock.content.label ?: "")
         } else {
             null
         }

@@ -16,11 +16,11 @@ class ProductGroupBlockFactory : BlockFactory {
 
     override fun createBlock(homeBlock: HomeBlock): Block? {
         val products = mutableListOf<Product>()
-        products.addAll(getProducts(homeBlock.content.fetchParams))
+        products.addAll(getProducts(homeBlock.content.fetchParams ?: HomeBlockContentParams()))
         return if (products.isNotEmpty()) {
             ProductGroupBlock(
                 products.map { i -> ProductBlock(i) },
-                homeBlock.content.label
+                homeBlock.content.label ?: ""
             )
         } else {
             null

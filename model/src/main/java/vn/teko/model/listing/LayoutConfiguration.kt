@@ -6,57 +6,57 @@ abstract class LayoutConfiguration {
 
 }
 
-class SlideBannerConfiguration : LayoutConfiguration() {
+open class BaseLayoutConfiguration : LayoutConfiguration() {
 
     override fun configs(): Map<String, String> {
         return mapOf(
             "backgroundColor" to "#f00",
-            "backgroundImageUrl" to "#f00",
+            "backgroundImageUrl" to ""
+        )
+    }
+}
+
+class SlideBannerConfiguration : BaseLayoutConfiguration() {
+
+    override fun configs(): Map<String, String> {
+        return super.configs() + mapOf(
             "autoSwipeTimeMilliseconds" to "10"
         )
     }
 
 }
 
-class RecommendedCategoryConfiguration : LayoutConfiguration() {
+class RecommendedCategoryConfiguration : BaseLayoutConfiguration() {
 
     override fun configs(): Map<String, String> {
-        return mapOf(
-            "backgroundColor" to "#f00",
-            "backgroundImageUrl" to "#f00",
+        return super.configs() + mapOf(
             "autoSwipeTimeMilliseconds" to "10"
         )
     }
 }
 
-class BestSellingProductConfiguration : LayoutConfiguration() {
+class BestSellingProductConfiguration : BaseLayoutConfiguration() {
 
     override fun configs(): Map<String, String> {
-        return mapOf(
-            "backgroundColor" to "#f00",
-            "backgroundImageUrl" to "#f00",
+        return super.configs() + mapOf(
             "autoSwipeTimeMilliseconds" to "10"
         )
     }
 }
 
-class PromoteSellerConfiguration : LayoutConfiguration() {
+class PromoteSellerConfiguration : BaseLayoutConfiguration() {
 
     override fun configs(): Map<String, String> {
-        return mapOf(
-            "backgroundColor" to "#f00",
-            "backgroundImageUrl" to "#f00",
+        return super.configs() + mapOf(
             "autoSwipeTimeMilliseconds" to "10"
         )
     }
 }
 
-class FlashSaleConfiguration : LayoutConfiguration() {
+class FlashSaleConfiguration : BaseLayoutConfiguration() {
 
     override fun configs(): Map<String, String> {
-        return mapOf(
-            "backgroundColor" to "#f00",
-            "backgroundImageUrl" to "#f00",
+        return super.configs() + mapOf(
             "autoSwipeTimeMilliseconds" to "10"
         )
     }
