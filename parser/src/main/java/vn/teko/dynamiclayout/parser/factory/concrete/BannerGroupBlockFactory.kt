@@ -1,5 +1,6 @@
-package vn.teko.dynamiclayout.parser.factory
+package vn.teko.dynamiclayout.parser.factory.concrete
 
+import vn.teko.dynamiclayout.parser.factory.BlockFactory
 import vn.teko.model.block.BannerBlock
 import vn.teko.model.block.BannerGroupBlock
 import vn.teko.model.block.Block

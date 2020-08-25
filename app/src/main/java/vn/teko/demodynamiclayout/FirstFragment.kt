@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import vn.teko.dynamiclayout.parser.Parser
+import vn.teko.dynamiclayout.parser.VnShopParser
 import vn.teko.model.block.Block
 import vn.teko.model.listing.Product
 
@@ -22,6 +23,14 @@ import vn.teko.model.listing.Product
 class FirstFragment : Fragment(), ContentController.Callbacks {
 
     private val contentController = ContentController(this)
+
+    private lateinit var parser: Parser
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        parser = VnShopParser()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +53,7 @@ class FirstFragment : Fragment(), ContentController.Callbacks {
         recyclerView.setController(contentController)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val fetchData = Parser().fetchData()
+            val fetchData = parser.fetchData(mapOf())
             withContext(Dispatchers.Main) {
                 contentController.setData(fetchData)
                 loading.isVisible = false

@@ -1,8 +1,9 @@
-package vn.teko.dynamiclayout.parser.factory
+package vn.teko.dynamiclayout.parser.factory.concrete
 
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
-import vn.teko.dynamiclayout.parser.Parser
+import vn.teko.dynamiclayout.parser.VnShopParser
+import vn.teko.dynamiclayout.parser.factory.BlockFactory
 import vn.teko.model.block.Block
 import vn.teko.model.block.ProductBlock
 import vn.teko.model.block.ProductGroupBlock
@@ -27,7 +28,7 @@ class ProductGroupBlockFactory : BlockFactory {
     }
 
     private fun getProducts(params: HomeBlockContentParams): List<Product> {
-        val listProduct = Parser.REQ_GET_PRODUCTS.httpGet(
+        val listProduct = VnShopParser.REQ_GET_PRODUCTS.httpGet(
             listOf(
                 "channel" to "vnshop_online",
                 "terminal" to "vnshop_app",
