@@ -20,7 +20,8 @@ class ProductGroupBlockFactory : BlockFactory {
         return if (products.isNotEmpty()) {
             ProductGroupBlock(
                 products.map { i -> ProductBlock(i) },
-                homeBlock.content.label ?: ""
+                homeBlock.content.label ?: "",
+                homeBlock.layout.childLayout?.type ?: "unknown"
             )
         } else {
             null

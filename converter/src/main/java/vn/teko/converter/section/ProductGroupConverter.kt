@@ -21,23 +21,23 @@ class ProductGroupConverter(
     }
 
     override fun getData(): List<DataStore> {
-        return model.products.mapIndexed { index, product ->
+        return model.getBlocks().mapIndexed { index, product ->
             when (model.getItemType()) {
                 "simple" -> {
                     SimpleProductConverter(
-                        product = ProductBlock(product.product),
+                        product = product as ProductBlock,
                         clickListener = { clickItemListener?.invoke(index) })
 
                 }
                 "discount" -> {
                     DiscountProductConverter(
-                        product = ProductBlock(product.product),
+                        product = product as ProductBlock,
                         clickListener = { clickItemListener?.invoke(index) })
 
                 }
                 else -> {
                     SimpleProductConverter(
-                        product = ProductBlock(product.product),
+                        product = product as ProductBlock,
                         clickListener = { clickItemListener?.invoke(index) })
 
                 }

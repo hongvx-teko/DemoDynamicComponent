@@ -14,7 +14,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
         /**
          * all callbacks should be categorized as detail as possible
          */
-        fun gotoDetail(index: Int, block: Block, product: Product)
+        fun gotoDetail(index: Int, product: Product)
     }
 
     override fun buildModels(data: List<Block>?) {
@@ -68,7 +68,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
     }
 
     private fun resolveProductGroup(uiContent: ProductGroupBlock) {
-        val products = uiContent.products
+        val products = uiContent.getBlocks()
 
         BlockWithTitleModel_()
             .id(uiContent.id())
@@ -76,8 +76,7 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
                 ProductGroupConverter(uiContent) { idx ->
                     callbacks.gotoDetail(
                         idx,
-                        uiContent,
-                        products[idx].product
+                        (products[idx] as ProductBlock).product
                     )
                 })
             .addIf(products.isNotEmpty(), this)
@@ -89,7 +88,6 @@ class ContentController(private val callbacks: Callbacks) : TypedEpoxyController
             SimpleProductConverter(uiContent) {
                 callbacks.gotoDetail(
                     index,
-                    uiContent,
                     product
                 )
             }

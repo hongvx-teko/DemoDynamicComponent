@@ -63,8 +63,8 @@ class FirstFragment : Fragment(), ContentController.Callbacks {
 
     }
 
-    override fun gotoDetail(index: Int, block: Block, product: Product) {
-        Log.d("Hong", "gotoDetail: $index, $block, $product")
+    override fun gotoDetail(index: Int, product: Product) {
+        Log.d("Hong", "gotoDetail: $index, $product")
     }
 
 

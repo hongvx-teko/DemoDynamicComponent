@@ -71,7 +71,10 @@ class VnShopParser : Parser() {
                 layout = HomeBlockGenerator.generateLayout(
                     type = "RECOMMENDED_CATEGORY",
                     configurations = RecommendedCategoryConfiguration().configs(),
-                    childLayout = null
+                    childLayout = HomeBlockLayout(
+                        type = "category",
+                        configurations = null
+                    )
                 ),
                 content = HomeBlockGenerator.generateContent(
                     label = "Recommended Categories",
@@ -95,7 +98,9 @@ class VnShopParser : Parser() {
                 layout = HomeBlockGenerator.generateLayout(
                     type = "BEST_SELLING_PRODUCT",
                     configurations = BestSellingProductConfiguration().configs(),
-                    childLayout = null
+                    childLayout = HomeBlockLayout(
+                        type = "discount"
+                    )
                 ),
                 content = HomeBlockGenerator.generateContent(
                     label = "BEST_SELLING_PRODUCT",
@@ -112,8 +117,7 @@ class VnShopParser : Parser() {
                 id = "block3",
                 layout = HomeBlockGenerator.generateLayout(
                     type = "PROMOTE_SELLER",
-                    configurations = PromoteSellerConfiguration().configs(),
-                    childLayout = null
+                    configurations = PromoteSellerConfiguration().configs()
                 ),
                 content = HomeBlockGenerator.generateContent(
                     label = "PROMOTE_SELLER",
@@ -131,7 +135,9 @@ class VnShopParser : Parser() {
                 layout = HomeBlockGenerator.generateLayout(
                     type = "FLASH_SALE",
                     configurations = FlashSaleConfiguration().configs(),
-                    childLayout = null
+                    childLayout = HomeBlockLayout(
+                        type = "discount"
+                    )
                 ),
                 content = HomeBlockGenerator.generateContent(
                     label = "FLASH_SALE",

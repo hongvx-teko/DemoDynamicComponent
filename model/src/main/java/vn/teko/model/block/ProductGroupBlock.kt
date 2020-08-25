@@ -1,13 +1,16 @@
 package vn.teko.model.block
 
-class ProductGroupBlock(val products: List<ProductBlock>, val title: String) :
-    Combination {
+class ProductGroupBlock(
+    private val products: List<ProductBlock>,
+    val title: String,
+    private val itemLayout: String
+) : Combination {
     override fun getBlocks(): List<Block> {
         return products
     }
 
     override fun getItemType(): String {
-        return "discount" // can be "simple", "discount"
+        return itemLayout // can be "simple", "discount"
     }
 
     override fun id(): String {

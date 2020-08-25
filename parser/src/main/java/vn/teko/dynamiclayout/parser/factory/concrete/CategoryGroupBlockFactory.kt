@@ -13,7 +13,11 @@ class CategoryGroupBlockFactory : BlockFactory {
         val categories = mutableListOf<Category>()
         homeBlock.content.items?.map { i -> categories.add(Category(i.id, i.label, i.imageUrl)) }
         return if (categories.isNotEmpty()) {
-            CategoryGroupBlock(categories.map { i -> CategoryBlock(i) }, homeBlock.content.label ?: "")
+            CategoryGroupBlock(
+                categories.map { i -> CategoryBlock(i) },
+                homeBlock.content.label ?: "",
+                homeBlock.layout.childLayout?.type ?: "unknown"
+            )
         } else {
             null
         }
