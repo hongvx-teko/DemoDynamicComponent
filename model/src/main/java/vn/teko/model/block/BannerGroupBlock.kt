@@ -1,6 +1,6 @@
 package vn.teko.model.block
 
-class BannerGroupBlock(val banners: List<BannerBlock>) : Combination {
+class BannerGroupBlock(private val banners: List<BannerBlock>) : Combination {
 
     override fun getBlocks(): List<Block> {
         return banners

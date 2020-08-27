@@ -1,7 +1,7 @@
-package vn.teko.dynamiclayout.parser.factory.concrete
+package vn.teko.dynamiclayout.parser.vnshop.concrete
 
-import vn.teko.dynamiclayout.parser.factory.BlockFactory
-import vn.teko.dynamiclayout.parser.factory.VnShopBlockFactory
+import vn.teko.dynamiclayout.parser.BlockFactory
+import vn.teko.dynamiclayout.parser.vnshop.VnShopBlockFactory
 import vn.teko.model.block.Block
 import vn.teko.model.block.NestedBlock
 import vn.teko.model.listing.HomeBlock
@@ -12,7 +12,8 @@ class NestedBlockFactory : BlockFactory {
         val blocks = mutableListOf<Block>()
 
         homeBlock.content.childs?.map { child ->
-            val factory = VnShopBlockFactory().createFactory(child.layout.type)
+            val factory = VnShopBlockFactory()
+                .createFactory(child.layout.type)
             factory.createBlock(child)?.let { block ->
                 blocks.add(block)
             }

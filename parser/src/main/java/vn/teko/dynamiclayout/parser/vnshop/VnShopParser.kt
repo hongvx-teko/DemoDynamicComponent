@@ -1,7 +1,7 @@
-package vn.teko.dynamiclayout.parser
+package vn.teko.dynamiclayout.parser.vnshop
 
-import vn.teko.dynamiclayout.parser.factory.AbstractBlockFactory
-import vn.teko.dynamiclayout.parser.factory.VnShopBlockFactory
+import vn.teko.dynamiclayout.parser.Parser
+import vn.teko.dynamiclayout.parser.AbstractBlockFactory
 import vn.teko.model.generator.HomeBlockGenerator
 import vn.teko.model.listing.*
 

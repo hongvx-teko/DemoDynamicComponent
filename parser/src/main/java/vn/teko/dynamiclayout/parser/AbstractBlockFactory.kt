@@ -1,4 +1,4 @@
-package vn.teko.dynamiclayout.parser.factory
+package vn.teko.dynamiclayout.parser
 
 interface AbstractBlockFactory {
 

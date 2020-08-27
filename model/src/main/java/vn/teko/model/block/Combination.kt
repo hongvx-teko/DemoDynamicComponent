@@ -1,7 +1,5 @@
 package vn.teko.model.block
 
-import vn.teko.model.block.Block
-
 interface Combination : Block {
 
     /**

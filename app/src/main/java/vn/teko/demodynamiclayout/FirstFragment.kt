@@ -13,8 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import vn.teko.dynamiclayout.parser.Parser
-import vn.teko.dynamiclayout.parser.VnShopParser
-import vn.teko.model.block.Block
+import vn.teko.dynamiclayout.parser.vnshop.VnShopParser
 import vn.teko.model.listing.Product
 
 /**

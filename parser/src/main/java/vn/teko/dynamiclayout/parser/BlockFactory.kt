@@ -1,4 +1,4 @@
-package vn.teko.dynamiclayout.parser.factory
+package vn.teko.dynamiclayout.parser
 
 import vn.teko.model.block.Block
 import vn.teko.model.listing.HomeBlock

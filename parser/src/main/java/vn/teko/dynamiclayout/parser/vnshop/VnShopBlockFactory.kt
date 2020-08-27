@@ -1,6 +1,8 @@
-package vn.teko.dynamiclayout.parser.factory
+package vn.teko.dynamiclayout.parser.vnshop
 
-import vn.teko.dynamiclayout.parser.factory.concrete.*
+import vn.teko.dynamiclayout.parser.AbstractBlockFactory
+import vn.teko.dynamiclayout.parser.BlockFactory
+import vn.teko.dynamiclayout.parser.vnshop.concrete.*
 
 class VnShopBlockFactory : AbstractBlockFactory {
 

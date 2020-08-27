@@ -1,9 +1,9 @@
-package vn.teko.dynamiclayout.parser.factory.concrete
+package vn.teko.dynamiclayout.parser.vnshop.concrete
 
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
-import vn.teko.dynamiclayout.parser.VnShopParser
-import vn.teko.dynamiclayout.parser.factory.BlockFactory
+import vn.teko.dynamiclayout.parser.vnshop.VnShopParser
+import vn.teko.dynamiclayout.parser.BlockFactory
 import vn.teko.model.block.Block
 import vn.teko.model.block.ProductBlock
 import vn.teko.model.block.ProductGroupBlock
