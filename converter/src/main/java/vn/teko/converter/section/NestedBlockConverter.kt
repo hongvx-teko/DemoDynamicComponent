@@ -1,6 +1,7 @@
 package vn.teko.converter.section
 
 import vn.teko.converter.UnsupportedBlockException
+import vn.teko.datastore.Configuration
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
 import vn.teko.model.block.*
@@ -8,7 +9,7 @@ import vn.teko.model.block.*
 class NestedBlockConverter(
     private val model: NestedBlock,
     private val clickItemListener: ((Int) -> Unit)?
-) : BlockWithTitleDataStore {
+) : BlockWithTitleDataStore() {
 
     override fun getTitle(): String {
         return model.title
@@ -41,4 +42,11 @@ class NestedBlockConverter(
     override fun getId(): String {
         return model.id()
     }
+
+    override fun getConfigurations(): List<Configuration> {
+        return model.getConfiguration()
+            .filter { getAvailableKeys().contains(it.code) }
+            .map { Configuration(it.code, it.value) }
+    }
+
 }

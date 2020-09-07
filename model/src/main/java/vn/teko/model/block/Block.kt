@@ -11,6 +11,6 @@ interface Block {
      * all configurations of this block will be listed here, everything about how to layout this block in parent
      * such as padding, margin, size, color, ...
      */
-    fun getConfiguration(): List<Configuration>
+    fun getConfiguration(): Set<Configuration>
 
 }

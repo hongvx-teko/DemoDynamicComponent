@@ -1,5 +1,6 @@
 package vn.teko.model.generator
 
+import vn.teko.model.block.Configuration
 import vn.teko.model.listing.*
 
 object HomeBlockGenerator {
@@ -20,12 +21,12 @@ object HomeBlockGenerator {
 
     fun generateLayout(
         type: String,
-        configurations: Map<String, String>? = null,
+        configurations: Set<Configuration>? = null,
         childLayout: HomeBlockLayout? = null
     ): HomeBlockLayout {
         return HomeBlockLayout(
             type = type,
-            configurations = configurations ?: mapOf(),
+            configurations = configurations ?: setOf(),
             childLayout = childLayout
         )
     }

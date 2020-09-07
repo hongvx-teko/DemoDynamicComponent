@@ -1,17 +1,27 @@
 package vn.teko.model.listing
 
+import vn.teko.model.block.Configuration
+
 interface LayoutConfiguration {
 
-    fun configs(): Map<String, String>
+    fun configs(): Set<Configuration>
 
 }
 
 open class BaseLayoutConfiguration : LayoutConfiguration {
 
-    override fun configs(): Map<String, String> {
-        return mapOf(
-            "backgroundColor" to "#f00",
-            "backgroundImageUrl" to ""
+    override fun configs(): Set<Configuration> {
+        return setOf(
+            Configuration("", "backgroundColor", "#00000000"),
+            Configuration("", "backgroundImageUrl", ""),
+            Configuration("", "paddingTop", "0"),
+            Configuration("", "paddingBottom", "0"),
+            Configuration("", "paddingLeft", "0"),
+            Configuration("", "paddingRight", "0"),
+            Configuration("", "marginTop", "0"),
+            Configuration("", "marginBottom", "0"),
+            Configuration("", "marginLeft", "0"),
+            Configuration("", "marginRight", "0")
         )
     }
 
@@ -19,9 +29,11 @@ open class BaseLayoutConfiguration : LayoutConfiguration {
 
 class CategoryConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "ratio" to "1:1"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "ratio", "1:1"),
+            Configuration("", "paddingBottom", "15"),
+            Configuration("", "backgroundColor", "#ffffffff")
         )
     }
 
@@ -29,9 +41,9 @@ class CategoryConfiguration : BaseLayoutConfiguration() {
 
 class BannerConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "ratio" to "3:1"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "ratio", "3:1")
         )
     }
 
@@ -39,10 +51,10 @@ class BannerConfiguration : BaseLayoutConfiguration() {
 
 class SimpleProductConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "textSize" to "10",
-            "textColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "textSize", "10"),
+            Configuration("", "textColor", "#f00")
         )
     }
 
@@ -50,16 +62,16 @@ class SimpleProductConfiguration : BaseLayoutConfiguration() {
 
 class DiscountProductConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "productNameTextSize" to "10",
-            "productNameTextColor" to "#f00",
-            "priceTextSize" to "10",
-            "priceTextColor" to "#f00",
-            "listedPriceTextSize" to "10",
-            "listedPriceTextColor" to "#f00",
-            "discountTextSize" to "10",
-            "discountTextColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "productNameTextSize", "10"),
+            Configuration("", "productNameTextColor", "#f00"),
+            Configuration("", "priceTextSize", "10"),
+            Configuration("", "priceTextColor", "#f00"),
+            Configuration("", "listedPriceTextSize", "10"),
+            Configuration("", "listedPriceTextColor", "#f00"),
+            Configuration("", "discountTextSize", "10"),
+            Configuration("", "discountTextColor", "#f00")
         )
     }
 
@@ -67,9 +79,9 @@ class DiscountProductConfiguration : BaseLayoutConfiguration() {
 
 class SlideBannerConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "autoSwipeTimeMilliseconds" to "10"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "autoSwipeTimeMilliseconds", "10")
         )
     }
 
@@ -77,10 +89,10 @@ class SlideBannerConfiguration : BaseLayoutConfiguration() {
 
 class RecommendedCategoryConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "titleSize" to "10",
-            "titleColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "titleSize", "10"),
+            Configuration("", "titleColor", "#f00")
         )
     }
 
@@ -88,10 +100,10 @@ class RecommendedCategoryConfiguration : BaseLayoutConfiguration() {
 
 class BestSellingProductConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "titleSize" to "10",
-            "titleColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "titleSize", "10"),
+            Configuration("", "titleColor", "#f00")
         )
     }
 
@@ -99,10 +111,10 @@ class BestSellingProductConfiguration : BaseLayoutConfiguration() {
 
 class PromoteSellerConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "titleSize" to "10",
-            "titleColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "titleSize", "10"),
+            Configuration("", "titleColor", "#f00")
         )
     }
 
@@ -110,10 +122,10 @@ class PromoteSellerConfiguration : BaseLayoutConfiguration() {
 
 class FlashSaleConfiguration : BaseLayoutConfiguration() {
 
-    override fun configs(): Map<String, String> {
-        return super.configs() + mapOf(
-            "titleSize" to "10",
-            "titleColor" to "#f00"
+    override fun configs(): Set<Configuration> {
+        return super.configs() + setOf(
+            Configuration("", "titleSize", "10"),
+            Configuration("", "titleColor", "#f00")
         )
     }
 
