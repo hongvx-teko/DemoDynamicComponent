@@ -8,8 +8,8 @@ class ProductBlock(val product: Product) : Block {
         return product.name
     }
 
-    override fun getConfiguration(): List<Configuration> {
-        return listOf()
+    override fun getConfiguration(): Set<Configuration> {
+        return setOf()
     }
 
 }

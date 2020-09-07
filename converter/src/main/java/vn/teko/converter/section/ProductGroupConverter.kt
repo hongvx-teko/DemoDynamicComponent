@@ -2,6 +2,7 @@ package vn.teko.converter.section
 
 import vn.teko.converter.product.DiscountProductConverter
 import vn.teko.converter.product.SimpleProductConverter
+import vn.teko.datastore.Configuration
 import vn.teko.datastore.DataStore
 import vn.teko.datastore.block.BlockWithTitleDataStore
 import vn.teko.model.block.ProductGroupBlock
@@ -10,7 +11,7 @@ import vn.teko.model.block.ProductBlock
 class ProductGroupConverter(
     private val model: ProductGroupBlock,
     private val clickItemListener: ((Int) -> Unit)?
-) : BlockWithTitleDataStore {
+) : BlockWithTitleDataStore() {
 
     override fun getTitle(): String {
         return model.title
@@ -48,4 +49,11 @@ class ProductGroupConverter(
     override fun getId(): String {
         return model.id()
     }
+
+    override fun getConfigurations(): List<Configuration> {
+        return model.getConfiguration()
+            .filter { getAvailableKeys().contains(it.code) }
+            .map { Configuration(it.code, it.value) }
+    }
+
 }

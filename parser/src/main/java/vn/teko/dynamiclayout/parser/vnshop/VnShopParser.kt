@@ -48,7 +48,11 @@ class VnShopParser : Parser() {
                 layout = HomeBlockGenerator.generateLayout(
                     type = "SLIDE_BANNER",
                     configurations = SlideBannerConfiguration().configs(),
-                    childLayout = null
+                    childLayout = HomeBlockGenerator.generateLayout(
+                        type = "BANNER",
+                        configurations = BannerConfiguration().configs(),
+                        childLayout = null
+                    )
                 ),
                 content = HomeBlockGenerator.generateContent(
                     label = "Banner Slider",
@@ -73,7 +77,7 @@ class VnShopParser : Parser() {
                     configurations = RecommendedCategoryConfiguration().configs(),
                     childLayout = HomeBlockLayout(
                         type = "category",
-                        configurations = null
+                        configurations = CategoryConfiguration().configs()
                     )
                 ),
                 content = HomeBlockGenerator.generateContent(

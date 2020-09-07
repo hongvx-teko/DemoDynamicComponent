@@ -4,6 +4,7 @@ import vn.teko.dynamiclayout.parser.BlockFactory
 import vn.teko.model.block.BannerBlock
 import vn.teko.model.block.BannerGroupBlock
 import vn.teko.model.block.Block
+import vn.teko.model.block.Configuration
 import vn.teko.model.listing.Banner
 import vn.teko.model.listing.HomeBlock
 
@@ -13,7 +14,12 @@ class BannerGroupBlockFactory : BlockFactory {
         val banners = mutableListOf<Banner>()
         homeBlock.content.items?.map { i -> banners.add(Banner(i.id, i.imageUrl)) }
         return if (banners.isNotEmpty()) {
-            BannerGroupBlock(banners.map { i -> BannerBlock(i) })
+            BannerGroupBlock(banners.map { i ->
+                BannerBlock(
+                    i,
+                    homeBlock.layout.childLayout?.configurations ?: setOf()
+                )
+            }, homeBlock.layout.configurations ?: setOf())
         } else {
             null
         }

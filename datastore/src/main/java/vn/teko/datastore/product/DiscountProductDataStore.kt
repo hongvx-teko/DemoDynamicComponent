@@ -2,11 +2,15 @@ package vn.teko.datastore.product
 
 import vn.teko.datastore.DataStore
 
-interface DiscountProductDataStore : DataStore {
-    fun getImageUrl(): String
-    fun getName(): String
-    fun discount(): String
-    fun sellPrice(): String
-    fun listedPrice(): String
-    fun clickListener(): (() -> Unit)?
+abstract class DiscountProductDataStore : DataStore {
+    abstract fun getImageUrl(): String
+    abstract fun getName(): String
+    abstract fun discount(): String
+    abstract fun sellPrice(): String
+    abstract fun listedPrice(): String
+    abstract fun clickListener(): (() -> Unit)?
+
+    final override fun getAvailableKeys(): List<String> {
+        return listOf()
+    }
 }

@@ -2,8 +2,12 @@ package vn.teko.datastore.product
 
 import vn.teko.datastore.DataStore
 
-interface SimpleProductDataStore : DataStore {
-    fun getPrice(): String
-    fun getImageUrl(): String
-    fun clickListener(): (() -> Unit)?
+abstract class SimpleProductDataStore : DataStore {
+    abstract fun getPrice(): String
+    abstract fun getImageUrl(): String
+    abstract fun clickListener(): (() -> Unit)?
+
+    final override fun getAvailableKeys(): List<String> {
+        return listOf()
+    }
 }

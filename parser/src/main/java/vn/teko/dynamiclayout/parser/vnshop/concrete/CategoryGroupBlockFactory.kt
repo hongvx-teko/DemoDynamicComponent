@@ -14,9 +14,10 @@ class CategoryGroupBlockFactory : BlockFactory {
         homeBlock.content.items?.map { i -> categories.add(Category(i.id, i.label, i.imageUrl)) }
         return if (categories.isNotEmpty()) {
             CategoryGroupBlock(
-                categories.map { i -> CategoryBlock(i) },
+                categories.map { i -> CategoryBlock(i, homeBlock.layout.childLayout?.configurations ?: setOf()) },
                 homeBlock.content.label ?: "",
-                homeBlock.layout.childLayout?.type ?: "unknown"
+                homeBlock.layout.childLayout?.type ?: "unknown",
+                homeBlock.layout.configurations ?: setOf()
             )
         } else {
             null

@@ -17,7 +17,7 @@ class ProductGroupBlock(
         return title
     }
 
-    override fun getConfiguration(): List<Configuration> {
-        return listOf()
+    override fun getConfiguration(): Set<Configuration> {
+        return setOf()
     }
 }

@@ -9,8 +9,8 @@ class NestedBlock(val bs: List<Block>, val title: String) : Combination {
         return title
     }
 
-    override fun getConfiguration(): List<Configuration> {
-        return listOf()
+    override fun getConfiguration(): Set<Configuration> {
+        return setOf()
     }
 
     override fun getItemType(): String {
