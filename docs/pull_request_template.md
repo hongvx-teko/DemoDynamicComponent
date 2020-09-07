@@ -1,17 +1,25 @@
-### All Submissions:
+### Task/Issue Detail
 
-* [ ] Have you followed the guidelines in our Contributing document?
-* [ ] Have you checked to ensure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
+Task/Issue link:
 
-<!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
-### New Feature Submissions:
+### How do you do it ? Any referenced documentations ?
 
-1. [ ] Does your submission pass tests?
-2. [ ] Have you lint your code locally prior to submission?
+How ?
 
-### Changes to Core Features:
+References ?
 
-* [ ] Have you added an explanation of what your changes do and why you'd like us to include them?
-* [ ] Have you written new tests for your core changes, as applicable?
-* [ ] Have you successfully ran tests with your changes locally?
+
+### Any test cases ? Info for confirmation (account, productSku, promotionCoupon,...)
+
+Data for test
+
+Add/Remove/Update Testcases
+
+
+### Checklist
+
+1. [ ] Pass tests?
+2. [ ] Format codes ?
+3. [ ] Changed files is smaller than 40 ?
+4. [ ] Complex method has documentation ?
